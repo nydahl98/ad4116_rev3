@@ -1,6 +1,5 @@
 {
-    "board": "arduino:megaavr:uno2018",
+    "board": "arduino:avr:uno",
     "sketch": "ad4116_rev3.ino",
-    "port": "COM3",
-    "configuration": "mode=off"
+    "port": "COM3"
 }

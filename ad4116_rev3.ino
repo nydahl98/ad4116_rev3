@@ -1,33 +1,37 @@
 #include <SPI.h>
+#include "Array.h"
 #include "AD4116.h"
 
 #define DATAOUT 11      // COPI/MOSI
 #define DATAIN 12       // CIPO/MISO
 #define spiCLOCK 13     // SCK/CLK
-#define CHIPSELECT 5  // SS/CS
 #define SPIMODE3 3
 
 #if defined(ARDUINO_AVR_UNO)
-    SPIClass spi;
+	uint8_t CHIPSELECT = 5; // SS/CS ~5 PIN
+	SPIClass spi;
 //ARDUINO MEGA 1256
 #elif defined(ARDUINO_AVR_MEGA)
     SPIClass spi;
 //ARDUINO MEGA 2560
 #elif defined(ARDUINO_AVR_MEGA2560)
+	uint8_t CHIPSELECT = 5; // SS/CS ~5 PIN
     SPIClass spi;
 //ARDUINO UNO WIFI
 #elif defined(ARDUINO_AVR_UNO_WIFI_DEV_ED)
     SPIClass spi;
 //ARDUINO UNO WIFI Rev 2
 #elif defined(ARDUINO_AVR_UNO_WIFI_REV2)
-    SPIClass spi(DATAIN, spiCLOCK, DATAOUT, CHIPSELECT, SPIMODE3);
+	uint8_t CHIPSELECT = 5; // SS/CS ~5 PIN
+    SPIClass spi(MISO, SCK, MOSI, CHIPSELECT, 3);
 #endif
 
 
 void setup()
 {
+
     /* initiate serial communication */
-    Serial.begin(19200);
+    Serial.begin(115200);
 
     /* Set the pin modes */
     #if defined(ARDUINO_AVR_UNO)
@@ -37,33 +41,57 @@ void setup()
         pinMode(SCK, OUTPUT);
         pinMode(CHIPSELECT, OUTPUT);
     }
+	#elif defined(ARDUINO_AVR_MEGA2560)
+	{
+		
+		pinMode(MOSI, OUTPUT);
+        pinMode(MISO, INPUT);
+        pinMode(SCK, OUTPUT);
+		pinMode(CHIPSELECT, OUTPUT);
+
+	}
     //ARDUINO UNO WIFI Rev 2
     #elif defined(ARDUINO_AVR_UNO_WIFI_REV2)
     {
         pinMode(MOSI, OUTPUT);
         pinMode(MISO, INPUT);
         pinMode(SCK, OUTPUT);
-        pinMode(CHIPSELECT, OUTPUT);
+		pinMode(CHIPSELECT, OUTPUT);
+		pinMode(SS, OUTPUT);
+		pinMode(10, OUTPUT);
+		pinMode(9, OUTPUT);
+		pinMode(6, OUTPUT);
+		pinMode(5, OUTPUT);
+
+				/* toggle the chip select */
+		digitalWrite(CHIPSELECT, HIGH); // disable device
+		digitalWrite(SS, HIGH); // disable device
+		digitalWrite(10, HIGH); // disable device
+		digitalWrite(9, HIGH); // disable device
+		digitalWrite(6, HIGH); // disable device
+		digitalWrite(5, HIGH); // disable device
+		delay(100);
+		digitalWrite(SS, HIGH); // disable device
+		// digitalWrite(SS, LOW); // disable device
+		// digitalWrite(10, LOW); 
+		// digitalWrite(9, LOW); // disable device
+		// digitalWrite(6, LOW); // disable device
+		digitalWrite(5, LOW); // disable device
+		/* allow the LDOs to power up */
+		delay(100);
     }
     #endif
 
-	/* initialize SPI connection to the ADC */
-		/* initiate SPI communication */
-		SPI.begin();
-		/* use SPI mode 3 */
-		SPI.setDataMode(SPI_MODE3);
-		/* allow the LDOs to power up */
-		delay(100);
-
 	/* sync the ADC */
-		/* toggle the chip select */
-		digitalWrite(CHIPSELECT, HIGH); // disable device
-		delay(100);
-		digitalWrite(CHIPSELECT, LOW); // disable device
+
+
+		/* initialize SPI connection to the ADC */
+		/* initiate SPI communication */
+		spi.begin();
+		/* use SPI mode 3 */
+		spi.setDataMode(SPI_MODE3);
 		/* allow the LDOs to power up */
 		delay(100);
-
-	
 
 	/* reset the ADC registers to default */
 
@@ -148,7 +176,7 @@ void setup()
 	AD4116.set_interface_mode_config(false, true);
 
 	/* wait for ADC */
-	delay(10);
+	delay(100000);
 
     spi.begin();
 }
@@ -171,12 +199,12 @@ void loop()
 
 		long long int id3 = (data0 << 16) | (data1 << 8) | data2;
 
-		double InputResultsScaled = 0.0001 * (50000 * (id3 - 8387126) / 1676914);
+		double InputResultsScaled = 0.000001 * (5000000 * (id3 - 8387126) / 1676914);
 		//int InputResults = id4;
 		Serial.println(InputResultsScaled, 6);
 
 
-		delay(1000);
+		delay(250);
 	}
 
 

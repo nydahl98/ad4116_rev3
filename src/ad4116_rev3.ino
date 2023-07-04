@@ -7,24 +7,10 @@
 #define spiCLOCK 13     // SCK/CLK
 #define SPIMODE3 3
 
-#if defined(ARDUINO_AVR_UNO)
+
 	uint8_t CHIPSELECT = 5; // SS/CS ~5 PIN
 	SPIClass spi;
-//ARDUINO MEGA 1256
-#elif defined(ARDUINO_AVR_MEGA)
-    SPIClass spi;
-//ARDUINO MEGA 2560
-#elif defined(ARDUINO_AVR_MEGA2560)
-	uint8_t CHIPSELECT = 5; // SS/CS ~5 PIN
-    SPIClass spi;
-//ARDUINO UNO WIFI
-#elif defined(ARDUINO_AVR_UNO_WIFI_DEV_ED)
-    SPIClass spi;
-//ARDUINO UNO WIFI Rev 2
-#elif defined(ARDUINO_AVR_UNO_WIFI_REV2)
-	uint8_t CHIPSELECT = 5; // SS/CS ~5 PIN
-    SPIClass spi(MISO, SCK, MOSI, CHIPSELECT, 3);
-#endif
+
 
 
 void setup()
@@ -113,10 +99,10 @@ void setup()
 
     /* check if the ID register of the ADC is valid */
 	if (valid_id) {
-        //Serial.println("AD4116 ID is valid");
+        Serial.println("AD4116 ID is valid");
     }
 	else {
-        //Serial.println("AD4116 ID is invalid");
+        Serial.println("AD4116 ID is invalid");
     }
 
     /* set ADC input channel configuration */
@@ -176,7 +162,7 @@ void setup()
 	AD4116.set_interface_mode_config(false, true);
 
 	/* wait for ADC */
-	delay(100000);
+	delay(10000);
 
     spi.begin();
 }

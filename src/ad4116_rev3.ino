@@ -11,6 +11,15 @@
 	uint8_t CHIPSELECT = 5; // SS/CS ~5 PIN
 	SPIClass spi;
 
+// #define DATAOUT 23      // COPI/MOSI
+// #define DATAIN 19       // CIPO/MISO
+// #define spiCLOCK 18     // SCK/CLK
+// #define SPIMODE3 3
+
+
+// 	uint8_t CHIPSELECT = 16; // SS/CS ~5 PIN
+// 	SPIClass spi;
+
 
 
 void setup()
@@ -20,53 +29,12 @@ void setup()
     Serial.begin(115200);
 
     /* Set the pin modes */
-    #if defined(ARDUINO_AVR_UNO)
-    {
+    
         pinMode(MOSI, OUTPUT);
         pinMode(MISO, INPUT);
         pinMode(SCK, OUTPUT);
         pinMode(CHIPSELECT, OUTPUT);
-    }
-	#elif defined(ARDUINO_AVR_MEGA2560)
-	{
-		
-		pinMode(MOSI, OUTPUT);
-        pinMode(MISO, INPUT);
-        pinMode(SCK, OUTPUT);
-		pinMode(CHIPSELECT, OUTPUT);
-
-	}
-    //ARDUINO UNO WIFI Rev 2
-    #elif defined(ARDUINO_AVR_UNO_WIFI_REV2)
-    {
-        pinMode(MOSI, OUTPUT);
-        pinMode(MISO, INPUT);
-        pinMode(SCK, OUTPUT);
-		pinMode(CHIPSELECT, OUTPUT);
-		pinMode(SS, OUTPUT);
-		pinMode(10, OUTPUT);
-		pinMode(9, OUTPUT);
-		pinMode(6, OUTPUT);
-		pinMode(5, OUTPUT);
-
-				/* toggle the chip select */
-		digitalWrite(CHIPSELECT, HIGH); // disable device
-		digitalWrite(SS, HIGH); // disable device
-		digitalWrite(10, HIGH); // disable device
-		digitalWrite(9, HIGH); // disable device
-		digitalWrite(6, HIGH); // disable device
-		digitalWrite(5, HIGH); // disable device
-		delay(100);
-		digitalWrite(SS, HIGH); // disable device
-		// digitalWrite(SS, LOW); // disable device
-		// digitalWrite(10, LOW); 
-		// digitalWrite(9, LOW); // disable device
-		// digitalWrite(6, LOW); // disable device
-		digitalWrite(5, LOW); // disable device
-		/* allow the LDOs to power up */
-		delay(100);
-    }
-    #endif
+    
 
 	/* sync the ADC */
 

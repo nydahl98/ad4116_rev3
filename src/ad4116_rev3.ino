@@ -43,7 +43,8 @@ void setup()
 		/* initiate SPI communication */
 		spi.begin();
 		/* use SPI mode 3 */
-		spi.setDataMode(SPI_MODE3);
+		// spi.setDataMode(SPI_MODE3);
+		SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE3));
 		/* allow the LDOs to power up */
 		delay(100);
 

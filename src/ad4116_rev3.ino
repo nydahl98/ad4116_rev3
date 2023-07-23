@@ -2,14 +2,14 @@
 #include "Array.h"
 #include "AD4116.h"
 
-#define DATAOUT 11      // COPI/MOSI
-#define DATAIN 12       // CIPO/MISO
-#define spiCLOCK 13     // SCK/CLK
-#define SPIMODE3 3
+// #define DATAOUT 11      // COPI/MOSI
+// #define DATAIN 12       // CIPO/MISO
+// #define spiCLOCK 13     // SCK/CLK
+//#define SPIMODE3 3
+#define CS_PIN       5
 
-
-	uint8_t CHIPSELECT = 5; // SS/CS ~5 PIN
-	SPIClass spi;
+	// uint8_t CHIPSELECT = 5; // SS/CS ~5 PIN
+	// SPIClass spi;
 
 // #define DATAOUT 23      // COPI/MOSI
 // #define DATAIN 19       // CIPO/MISO
@@ -30,18 +30,19 @@ void setup()
 
     /* Set the pin modes */
     
-        pinMode(MOSI, OUTPUT);
-        pinMode(MISO, INPUT);
-        pinMode(SCK, OUTPUT);
-        pinMode(CHIPSELECT, OUTPUT);
+        // pinMode(MOSI, OUTPUT);
+        // pinMode(MISO, INPUT);
+        // pinMode(SCK, OUTPUT);
+        // pinMode(CHIPSELECT, OUTPUT);
     
+	    pinMode(CS_PIN, OUTPUT);
 
 	/* sync the ADC */
 
 
 		/* initialize SPI connection to the ADC */
 		/* initiate SPI communication */
-		spi.begin();
+		SPI.begin();
 		/* use SPI mode 3 */
 		// spi.setDataMode(SPI_MODE3);
 		SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE3));
@@ -133,7 +134,7 @@ void setup()
 	/* wait for ADC */
 	delay(10000);
 
-    spi.begin();
+    // spi.begin();
 }
 
 /* ADC conversion data and STATUS register */

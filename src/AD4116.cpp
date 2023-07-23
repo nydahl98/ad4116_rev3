@@ -11,7 +11,8 @@ void AD4116Class::init() {
 	/* initiate SPI communication */
 	SPI.begin();
 	/* use SPI mode 3 */
-	SPI.setDataMode(SPI_MODE3);
+	//SPI.setDataMode(SPI_MODE3);
+	SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE3));
 	/* allow the LDOs to power up */
 	delay(10);
 }

@@ -2,6 +2,8 @@
 #include "Array.h"
 #include "AD4116.h"
 
+int probePin = A0;
+
 // #define DATAOUT 11      // COPI/MOSI
 // #define DATAIN 12       // CIPO/MISO
 // #define spiCLOCK 13     // SCK/CLK
@@ -25,6 +27,8 @@
 void setup()
 {
 
+
+    pinMode(probePin, OUTPUT);
     /* initiate serial communication */
     Serial.begin(115200);
 
@@ -107,7 +111,8 @@ void setup()
 	byte value[2] = {0x00, 0x00};
 	/* SINC3_MAP0 [15], RESERVED [14:12], ENHFILTEN0 [11], ENHFILT0 [10:8], RESERVED [7], ORDER0 [6:5], ORD0 [4:0] */
 	value[0] = 0x0E;
-	value[1] = SPS_100;
+	//value[1] = SPS_100;
+	value[1] = SPS_31250;
 
 
 	/* update the configuration value */
@@ -160,7 +165,21 @@ void loop()
 		Serial.println(InputResultsScaled, 6);
 
 
-		delay(250);
+		if (InputResultsScaled < -5) {
+        Serial.print("led on");
+        Serial.println();
+        digitalWrite(probePin, HIGH);
+  
+  
+ }
+ else {
+  Serial.print("led off");
+  Serial.println();
+  digitalWrite(probePin, LOW);
+ }
+
+
+		//delay(250);
 	}
 
 

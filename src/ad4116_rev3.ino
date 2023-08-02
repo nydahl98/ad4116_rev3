@@ -49,7 +49,8 @@ void setup()
 		SPI.begin();
 		/* use SPI mode 3 */
 		// spi.setDataMode(SPI_MODE3);
-		SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE3));
+		SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE3)); //14Mhz clock
+		//SPI.beginTransaction(SPISettings(4000000, MSBFIRST, SPI_MODE3)); //4Mhz clock
 		/* allow the LDOs to power up */
 		delay(100);
 

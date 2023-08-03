@@ -113,7 +113,7 @@ void setup()
 	/* SINC3_MAP0 [15], RESERVED [14:12], ENHFILTEN0 [11], ENHFILT0 [10:8], RESERVED [7], ORDER0 [6:5], ORD0 [4:0] */
 	value[0] = 0x0E;
 	//value[1] = SPS_100;
-	value[1] = SPS_31250;
+	value[1] = SPS_200;
 
 
 	/* update the configuration value */

@@ -49,8 +49,8 @@ void setup()
 		SPI.begin();
 		/* use SPI mode 3 */
 		// spi.setDataMode(SPI_MODE3);
-		SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE3)); //14Mhz clock
-		//SPI.beginTransaction(SPISettings(4000000, MSBFIRST, SPI_MODE3)); //4Mhz clock
+		//SPI.beginTransaction(SPISettings(14000000, MSBFIRST, SPI_MODE3)); //14Mhz clock
+		SPI.beginTransaction(SPISettings(4000000, MSBFIRST, SPI_MODE3)); //4Mhz clock
 		/* allow the LDOs to power up */
 		delay(100);
 
@@ -129,7 +129,8 @@ void setup()
 	/* to exit STANDBY_MODE use this same function to go into CONTINUOUS or SINGLE_CONVERSION_MODE */
 	/* INTERNAL_CLOCK, INTERNAL_CLOCK_OUTPUT, EXTERNAL_CLOCK_INPUT, EXTERNAL_CRYSTAL */
 	/* REF_DISABLE, REF_ENABLE */
-	AD4116.set_adc_mode_config(CONTINUOUS_CONVERSION_MODE, INTERNAL_CLOCK, REF_DISABLE);
+	//AD4116.set_adc_mode_config(CONTINUOUS_CONVERSION_MODE, INTERNAL_CLOCK, REF_DISABLE);
+	AD4116.set_adc_mode_config(SINGLE_CONVERSION_MODE, INTERNAL_CLOCK, REF_DISABLE);
 
     /* enable/disable CONTINUOUS_READ_MODE and appending STATUS register to data */
 	/* to exit CONTINUOUS_READ_MODE use AD4116.reset(); */

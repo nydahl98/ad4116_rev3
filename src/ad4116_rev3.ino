@@ -166,7 +166,7 @@ void loop()
 		Serial.println(InputResultsScaled, 6);
 
 
-		if (InputResultsScaled < -5) {
+		if (InputResultsScaled < -10) {
         Serial.print("led on");
         Serial.println();
         digitalWrite(probePin, HIGH);
